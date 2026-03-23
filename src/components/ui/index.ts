@@ -7,3 +7,4 @@ export type { ICardProps } from "./Card";
 export { Menu } from "./Menu";
 export { Drawer } from "./Drawer";
 export { Avatar } from "./Avatar";
+export { Tabs } from "./Tabs";

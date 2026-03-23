@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { Card, Badge, Button } from "@/components/ui";
 import { CardGrid } from "@/components/CardGrid";
-import { Page } from "@/components/Page";
+import { SimplePage } from "@/components/Page";
 
-const jobs = [
-  { title: "Senior Engineer", status: "Open" as const, location: "Remote" },
-  { title: "Product Designer", status: "Open" as const, location: "New York" },
-  { title: "Engineering Manager", status: "Closed" as const, location: "San Francisco" },
+const items = [
+  { title: "Item Alpha", status: "Active" as const, detail: "Category A" },
+  { title: "Item Beta", status: "Active" as const, detail: "Category B" },
+  { title: "Item Gamma", status: "Archived" as const, detail: "Category A" },
 ];
 
 const statusVariant = {
-  Open: "success",
-  Closed: "outline",
+  Active: "success",
+  Archived: "outline",
 } as const;
 
 function PropsTable() {
@@ -47,7 +47,7 @@ function PropsTable() {
   );
 }
 
-export default function PageDemoPage() {
+export default function SimplePageDemoPage() {
   return (
     <div className="min-h-screen">
       <header className="border-b-2 bg-background">
@@ -58,7 +58,7 @@ export default function PageDemoPage() {
           >
             &larr; All Components
           </Link>
-          <h1 className="font-head text-4xl mb-2">Page</h1>
+          <h1 className="font-head text-4xl mb-2">SimplePage</h1>
           <p className="font-sans text-lg text-muted-foreground max-w-xl">
             Layout wrapper with consistent header, title, actions slot, and content area.
           </p>
@@ -70,9 +70,9 @@ export default function PageDemoPage() {
         <section>
           <h2 className="font-head text-2xl mb-4">Basic</h2>
           <div className="border-2 overflow-hidden">
-            <Page title="Dashboard">
+            <SimplePage title="Dashboard">
               <p className="font-sans text-muted-foreground">Page content goes here.</p>
-            </Page>
+            </SimplePage>
           </div>
         </section>
 
@@ -80,9 +80,9 @@ export default function PageDemoPage() {
         <section>
           <h2 className="font-head text-2xl mb-4">With Subtitle</h2>
           <div className="border-2 overflow-hidden">
-            <Page title="Candidates" subtitle="All applicants across open positions">
+            <SimplePage title="Items" subtitle="Browse and manage all items">
               <p className="font-sans text-muted-foreground">Page content goes here.</p>
-            </Page>
+            </SimplePage>
           </div>
         </section>
 
@@ -90,31 +90,31 @@ export default function PageDemoPage() {
         <section>
           <h2 className="font-head text-2xl mb-4">With Actions</h2>
           <div className="border-2 overflow-hidden">
-            <Page
-              title="Jobs"
-              subtitle="All open positions"
-              actions={<Button size="sm">+ New Job</Button>}
+            <SimplePage
+              title="Items"
+              subtitle="Browse and manage all items"
+              actions={<Button size="sm">+ New Item</Button>}
             >
               <CardGrid>
-                {jobs.map((job) => (
-                  <Card key={job.title} variant="interactive">
+                {items.map((item) => (
+                  <Card key={item.title} variant="interactive">
                     <Card.Header>
                       <div className="flex items-center justify-between gap-2">
-                        <h3 className="font-head text-base">{job.title}</h3>
-                        <Badge variant={statusVariant[job.status]} size="sm">
-                          {job.status}
+                        <h3 className="font-head text-base">{item.title}</h3>
+                        <Badge variant={statusVariant[item.status]} size="sm">
+                          {item.status}
                         </Badge>
                       </div>
                     </Card.Header>
                     <Card.Body>
                       <p className="font-sans text-sm text-muted-foreground">
-                        {job.location}
+                        {item.detail}
                       </p>
                     </Card.Body>
                   </Card>
                 ))}
               </CardGrid>
-            </Page>
+            </SimplePage>
           </div>
         </section>
 
@@ -122,9 +122,9 @@ export default function PageDemoPage() {
         <section>
           <h2 className="font-head text-2xl mb-4">Empty State</h2>
           <div className="border-2 overflow-hidden">
-            <Page title="Jobs" subtitle="All open positions">
+            <SimplePage title="Items" subtitle="Browse and manage all items">
               <CardGrid />
-            </Page>
+            </SimplePage>
           </div>
         </section>
 
@@ -137,25 +137,25 @@ export default function PageDemoPage() {
         {/* ─── Usage ─── */}
         <section>
           <h2 className="font-head text-2xl mb-4">Usage</h2>
-          <div className="border-2 bg-secondary text-secondary-foreground p-6 font-mono text-sm whitespace-pre overflow-x-auto">{`<Page
-  title="Jobs"
-  subtitle="All open positions"
-  actions={<Button>+ New Job</Button>}
+          <div className="border-2 bg-secondary text-secondary-foreground p-6 font-mono text-sm whitespace-pre overflow-x-auto">{`<SimplePage
+  title="Items"
+  subtitle="Browse and manage all items"
+  actions={<Button>+ New Item</Button>}
 >
   <CardGrid columns={3}>
-    {jobs.map(job => (
-      <Card key={job.id} variant="interactive">
+    {items.map(item => (
+      <Card key={item.id} variant="interactive">
         <Card.Header>
-          <h3>{job.title}</h3>
-          <Badge variant="success">Open</Badge>
+          <h3>{item.title}</h3>
+          <Badge variant="success">Active</Badge>
         </Card.Header>
         <Card.Body>
-          <p>{job.location}</p>
+          <p>{item.detail}</p>
         </Card.Body>
       </Card>
     ))}
   </CardGrid>
-</Page>`}</div>
+</SimplePage>`}</div>
         </section>
       </main>
     </div>

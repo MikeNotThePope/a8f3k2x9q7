@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 // ─── Types ───
 
-export interface PageProps {
+export interface SimplePageProps {
   title: string;
   subtitle?: string;
   actions?: React.ReactNode;
@@ -13,13 +13,13 @@ export interface PageProps {
 
 // ─── Component ───
 
-export function Page({
+export function SimplePage({
   title,
   subtitle,
   actions,
   children,
   className,
-}: PageProps) {
+}: SimplePageProps) {
   return (
     <div className={cn("min-h-screen", className)}>
       <header className="border-b-2 bg-background">

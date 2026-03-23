@@ -1,2 +1,2 @@
-export { Page } from "./Page";
-export type { PageProps } from "./Page";
+export { SimplePage } from "./Page";
+export type { SimplePageProps } from "./Page";

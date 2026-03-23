@@ -1,35 +1,96 @@
 import Link from "next/link";
 
-const components = [
+interface ComponentEntry {
+  name: string;
+  description: string;
+  href: string;
+  status: "Ready" | "In Progress" | "Planned";
+}
+
+interface ComponentGroup {
+  title: string;
+  description: string;
+  components: ComponentEntry[];
+}
+
+const groups: ComponentGroup[] = [
   {
-    name: "NavBar",
-    description: "Responsive navigation bar with signed-in/signed-out states, mobile drawer, and configurable links.",
-    href: "/components/navbar",
-    status: "Ready" as const,
+    title: "Primitives",
+    description: "Small, composable building blocks.",
+    components: [
+      {
+        name: "Avatar",
+        description: "User photo with fallback initials. Built on Radix Avatar.",
+        href: "/components/avatar",
+        status: "Ready",
+      },
+      {
+        name: "Badge",
+        description: "Small status label with color variants and retro styling.",
+        href: "/components/badge",
+        status: "Ready",
+      },
+      {
+        name: "Button",
+        description: "Clickable action with size and variant options.",
+        href: "/components/button",
+        status: "Ready",
+      },
+      {
+        name: "Card",
+        description: "Container with header, body, and footer slots.",
+        href: "/components/card",
+        status: "Ready",
+      },
+      {
+        name: "Menu",
+        description: "Dropdown menu for contextual actions. Built on Radix.",
+        href: "/components/menu",
+        status: "Ready",
+      },
+      {
+        name: "Tabs",
+        description: "Tabbed interface with overflow dropdown. Built on Radix Tabs.",
+        href: "/components/tabs",
+        status: "Ready",
+      },
+    ],
   },
   {
-    name: "Card",
-    description: "Generic container with header, body, footer. Multiple visual treatments including interactive.",
-    href: "/components/card",
-    status: "Ready" as const,
-  },
-  {
-    name: "Badge",
-    description: "Small status label with color variants and retro styling.",
-    href: "/components/badge",
-    status: "Ready" as const,
-  },
-  {
-    name: "CardGrid",
-    description: "Responsive grid layout for cards with empty state. Configurable columns.",
-    href: "/components/card-grid",
-    status: "Ready" as const,
-  },
-  {
-    name: "Page",
-    description: "Layout wrapper with consistent header, title, actions slot, and content area.",
-    href: "/components/page",
-    status: "Ready" as const,
+    title: "Layout",
+    description: "Page structure and responsive containers.",
+    components: [
+      {
+        name: "CardGrid",
+        description: "Responsive grid for cards with configurable columns.",
+        href: "/components/card-grid",
+        status: "Ready",
+      },
+      {
+        name: "Drawer",
+        description: "Slide-in panel from the left or right edge.",
+        href: "/components/drawer",
+        status: "Ready",
+      },
+      {
+        name: "NavBar",
+        description: "Responsive navigation with auth states and mobile drawer.",
+        href: "/components/navbar",
+        status: "Ready",
+      },
+      {
+        name: "SimplePage",
+        description: "Page shell with header, title, actions slot, and content area.",
+        href: "/components/page",
+        status: "Ready",
+      },
+      {
+        name: "TwoColumnLayout",
+        description: "Side-by-side panels on desktop, drawer on mobile.",
+        href: "/components/two-column-layout",
+        status: "Ready",
+      },
+    ],
   },
 ];
 
@@ -60,26 +121,33 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-12">
-        <h2 className="font-head text-2xl mb-8">Components</h2>
+      <main className="mx-auto max-w-6xl px-4 py-12 flex flex-col gap-16">
+        {groups.map((group) => (
+          <section key={group.title}>
+            <h2 className="font-head text-2xl mb-1">{group.title}</h2>
+            <p className="font-sans text-sm text-muted-foreground mb-6">
+              {group.description}
+            </p>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {components.map((component) => (
-            <Link
-              key={component.name}
-              href={component.href}
-              className="block border-2 p-6 shadow-md hover:shadow transition-all hover:translate-y-1 bg-card"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-head text-xl">{component.name}</h3>
-                <StatusBadge status={component.status} />
-              </div>
-              <p className="font-sans text-sm text-muted-foreground">
-                {component.description}
-              </p>
-            </Link>
-          ))}
-        </div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {group.components.map((component) => (
+                <Link
+                  key={component.name}
+                  href={component.href}
+                  className="block border-2 p-6 shadow-md hover:shadow transition-all hover:translate-y-1 bg-card"
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-head text-xl">{component.name}</h3>
+                    <StatusBadge status={component.status} />
+                  </div>
+                  <p className="font-sans text-sm text-muted-foreground">
+                    {component.description}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ))}
       </main>
     </div>
   );
