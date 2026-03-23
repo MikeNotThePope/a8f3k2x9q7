@@ -25,6 +25,12 @@ const components = [
     href: "/components/card-grid",
     status: "Ready" as const,
   },
+  {
+    name: "Page",
+    description: "Layout wrapper with consistent header, title, actions slot, and content area.",
+    href: "/components/page",
+    status: "Ready" as const,
+  },
 ];
 
 function StatusBadge({ status }: { status: "Ready" | "In Progress" | "Planned" }) {
