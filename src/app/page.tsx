@@ -19,6 +19,12 @@ const components = [
     href: "/components/badge",
     status: "Ready" as const,
   },
+  {
+    name: "CardGrid",
+    description: "Responsive grid layout for cards with empty state. Configurable columns.",
+    href: "/components/card-grid",
+    status: "Ready" as const,
+  },
 ];
 
 function StatusBadge({ status }: { status: "Ready" | "In Progress" | "Planned" }) {

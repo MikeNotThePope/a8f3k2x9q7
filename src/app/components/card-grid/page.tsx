@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Card, Badge, Button } from "@/components/ui";
+import { CardGrid } from "@/components/CardGrid";
 
 const items = [
   { title: "Project Alpha", status: "Active" as const, detail: "Updated 2 days ago" },
@@ -13,11 +14,11 @@ const statusVariant = {
   Archived: "outline",
 } as const;
 
-function CardPropsTable() {
+function PropsTable() {
   const props = [
-    { name: "variant", type: '"default" | "outlined" | "elevated" | "interactive"', description: "Visual treatment. Interactive adds hover/active animation." },
-    { name: "asChild", type: "boolean", description: "Render as child element (e.g. Link) via Radix Slot" },
-    { name: "className", type: "string", description: "Additional classes on the root element" },
+    { name: "children", type: "ReactNode", description: "Card elements to render in the grid" },
+    { name: "columns", type: "2 | 3 | 4", description: "Max columns at largest breakpoint. Default: 3" },
+    { name: "className", type: "string", description: "Additional classes on the grid container" },
   ];
 
   return (
@@ -44,10 +45,9 @@ function CardPropsTable() {
   );
 }
 
-export default function CardPage() {
+export default function CardGridPage() {
   return (
     <div className="min-h-screen">
-      {/* Page header */}
       <header className="border-b-2 bg-background">
         <div className="mx-auto max-w-6xl px-4 py-8">
           <Link
@@ -56,46 +56,18 @@ export default function CardPage() {
           >
             &larr; All Components
           </Link>
-          <h1 className="font-head text-4xl mb-2">Card</h1>
+          <h1 className="font-head text-4xl mb-2">CardGrid</h1>
           <p className="font-sans text-lg text-muted-foreground max-w-xl">
-            Generic container with header, body, and footer. Multiple visual
-            treatments including interactive.
+            Responsive grid layout for cards with built-in empty state.
           </p>
         </div>
       </header>
 
       <main className="mx-auto max-w-6xl px-4 py-12 flex flex-col gap-12">
-        {/* ─── Card Variants ─── */}
+        {/* ─── With Content ─── */}
         <section>
-          <h2 className="font-head text-2xl mb-4">Card Variants</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {(["default", "outlined", "elevated", "interactive"] as const).map(
-              (variant) => (
-                <Card key={variant} variant={variant}>
-                  <Card.Header>
-                    <h3 className="font-head text-lg capitalize">{variant}</h3>
-                  </Card.Header>
-                  <Card.Body>
-                    <p className="font-sans text-sm text-muted-foreground">
-                      The {variant} card variant.
-                    </p>
-                  </Card.Body>
-                  <Card.Footer>
-                    <Button size="sm">Action</Button>
-                  </Card.Footer>
-                </Card>
-              ),
-            )}
-          </div>
-        </section>
-
-        {/* ─── Composition Example ─── */}
-        <section>
-          <h2 className="font-head text-2xl mb-2">Composition Example</h2>
-          <p className="font-sans text-sm text-muted-foreground mb-4">
-            Interactive cards composed with Badge for status indicators.
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 className="font-head text-2xl mb-4">With Content</h2>
+          <CardGrid>
             {items.map((item) => (
               <Card key={item.title} variant="interactive">
                 <Card.Header>
@@ -116,36 +88,73 @@ export default function CardPage() {
                 </Card.Footer>
               </Card>
             ))}
-          </div>
+          </CardGrid>
         </section>
 
-        {/* ─── Card Props ─── */}
+        {/* ─── Empty State ─── */}
         <section>
-          <h2 className="font-head text-2xl mb-4">Card Props</h2>
-          <CardPropsTable />
-          <p className="font-sans text-sm text-muted-foreground mt-2">
-            Sub-components: <code className="font-mono">Card.Header</code>,{" "}
-            <code className="font-mono">Card.Body</code>,{" "}
-            <code className="font-mono">Card.Footer</code> each accept{" "}
-            <code className="font-mono">className</code> and standard div props.
-          </p>
+          <h2 className="font-head text-2xl mb-4">Empty State</h2>
+          <CardGrid />
+        </section>
+
+        {/* ─── Column Variants ─── */}
+        <section>
+          <h2 className="font-head text-2xl mb-4">Columns</h2>
+          <h3 className="font-head text-lg mb-3">2 Columns</h3>
+          <CardGrid columns={2}>
+            {items.slice(0, 2).map((item) => (
+              <Card key={item.title}>
+                <Card.Header>
+                  <h3 className="font-head text-base">{item.title}</h3>
+                </Card.Header>
+                <Card.Body>
+                  <p className="font-sans text-sm text-muted-foreground">
+                    {item.detail}
+                  </p>
+                </Card.Body>
+              </Card>
+            ))}
+          </CardGrid>
+
+          <h3 className="font-head text-lg mt-6 mb-3">4 Columns</h3>
+          <CardGrid columns={4}>
+            {[...items, { title: "Project Delta", status: "Active" as const, detail: "Updated today" }].map((item) => (
+              <Card key={item.title}>
+                <Card.Header>
+                  <h3 className="font-head text-base">{item.title}</h3>
+                </Card.Header>
+                <Card.Body>
+                  <p className="font-sans text-sm text-muted-foreground">
+                    {item.detail}
+                  </p>
+                </Card.Body>
+              </Card>
+            ))}
+          </CardGrid>
+        </section>
+
+        {/* ─── Props ─── */}
+        <section>
+          <h2 className="font-head text-2xl mb-4">Props</h2>
+          <PropsTable />
         </section>
 
         {/* ─── Usage ─── */}
         <section>
           <h2 className="font-head text-2xl mb-4">Usage</h2>
-          <div className="border-2 bg-secondary text-secondary-foreground p-6 font-mono text-sm whitespace-pre overflow-x-auto">{`<Card variant="interactive">
-  <Card.Header>
-    <h3 className="font-head">Title</h3>
-    <Badge variant="success" size="sm">Active</Badge>
-  </Card.Header>
-  <Card.Body>
-    <p>Supporting detail here</p>
-  </Card.Body>
-  <Card.Footer>
-    <Button size="sm">View</Button>
-  </Card.Footer>
-</Card>`}</div>
+          <div className="border-2 bg-secondary text-secondary-foreground p-6 font-mono text-sm whitespace-pre overflow-x-auto">{`<CardGrid columns={3}>
+  {items.map(item => (
+    <Card key={item.id} variant="interactive">
+      <Card.Header>
+        <h3>{item.title}</h3>
+        <Badge variant="success">Active</Badge>
+      </Card.Header>
+      <Card.Body>
+        <p>{item.detail}</p>
+      </Card.Body>
+    </Card>
+  ))}
+</CardGrid>`}</div>
         </section>
       </main>
     </div>
