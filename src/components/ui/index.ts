@@ -21,3 +21,11 @@ export { Select } from "./Select";
 export { Switch } from "./Switch";
 export { Slider } from "./Slider";
 export { Text } from "./Text";
+export { FormLayout } from "./FormLayout";
+export type {
+  IFormLayoutProps,
+  IFormSectionProps,
+  IFormFieldProps,
+  IFormRowProps,
+  IFormActionsProps,
+} from "./FormLayout";

@@ -127,6 +127,12 @@ const groups: ComponentGroup[] = [
         status: "Ready",
       },
       {
+        name: "FormLayout",
+        description: "Form shell with sections, field wrappers, inline rows, and action bar.",
+        href: "/components/form-layout",
+        status: "Ready",
+      },
+      {
         name: "NavBar",
         description: "Responsive navigation with auth states and mobile drawer.",
         href: "/components/navbar",
