@@ -57,6 +57,54 @@ const groups: ComponentGroup[] = [
     ],
   },
   {
+    title: "Form",
+    description: "Inputs, selects, and controls for collecting data.",
+    components: [
+      {
+        name: "Input",
+        description: "Text input supporting all standard HTML input types.",
+        href: "/components/input",
+        status: "Ready",
+      },
+      {
+        name: "Textarea",
+        description: "Multi-line text input for longer content.",
+        href: "/components/textarea",
+        status: "Ready",
+      },
+      {
+        name: "Checkbox",
+        description: "Toggle a single option on or off. Built on Radix Checkbox.",
+        href: "/components/checkbox",
+        status: "Ready",
+      },
+      {
+        name: "RadioGroup",
+        description: "Select one option from a set. Built on Radix Radio Group.",
+        href: "/components/radio-group",
+        status: "Ready",
+      },
+      {
+        name: "Select",
+        description: "Dropdown picker for choosing from a list. Built on Radix Select.",
+        href: "/components/select",
+        status: "Ready",
+      },
+      {
+        name: "Switch",
+        description: "Binary toggle for on/off settings. Built on Radix Switch.",
+        href: "/components/switch",
+        status: "Ready",
+      },
+      {
+        name: "Slider",
+        description: "Range input for selecting numeric values. Built on Radix Slider.",
+        href: "/components/slider",
+        status: "Ready",
+      },
+    ],
+  },
+  {
     title: "Layout",
     description: "Page structure and responsive containers.",
     components: [
