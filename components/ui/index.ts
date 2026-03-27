@@ -29,3 +29,15 @@ export type {
   IFormRowProps,
   IFormActionsProps,
 } from "./FormLayout";
+export { Link, linkVariants } from "./Link";
+export type { ILinkProps } from "./Link";
+export { Alert, alertVariants } from "./Alert";
+export type { IAlertProps } from "./Alert";
+export { IconButton, iconButtonVariants } from "./IconButton";
+export type { IIconButtonProps } from "./IconButton";
+export { Loader, loaderVariants } from "./Loader";
+export type { ILoaderProps } from "./Loader";
+export { Dialog, dialogContentVariants } from "./Dialog";
+export type { IDialogContentProps } from "./Dialog";
+export { Divider, dividerVariants } from "./Divider";
+export type { IDividerProps } from "./Divider";

@@ -43,6 +43,24 @@ const groups: ComponentGroup[] = [
         status: "Ready",
       },
       {
+        name: "IconButton",
+        description: "Icon-only button with retro shadow, sized to fit SVG icons.",
+        href: "/components/icon-button",
+        status: "Ready",
+      },
+      {
+        name: "Link",
+        description: "Styled anchor with variant support and asChild for Next.js Link.",
+        href: "/components/link",
+        status: "Ready",
+      },
+      {
+        name: "Loader",
+        description: "Bouncing dots loader with configurable count and speed.",
+        href: "/components/loader",
+        status: "Ready",
+      },
+      {
         name: "Text",
         description: "Typography primitives for headings, body, small text, and code.",
         href: "/components/text",
@@ -66,6 +84,12 @@ const groups: ComponentGroup[] = [
     title: "Form",
     description: "Inputs, selects, and controls for collecting data.",
     components: [
+      {
+        name: "Alert",
+        description: "Contextual feedback with semantic status colors and composable title/description.",
+        href: "/components/alert",
+        status: "Ready",
+      },
       {
         name: "Input",
         description: "Text input supporting all standard HTML input types.",
@@ -118,6 +142,18 @@ const groups: ComponentGroup[] = [
         name: "CardGrid",
         description: "Responsive grid for cards with configurable columns.",
         href: "/components/card-grid",
+        status: "Ready",
+      },
+      {
+        name: "Dialog",
+        description: "Modal dialog with header, body, footer, and overlay. Built on Radix Dialog.",
+        href: "/components/dialog",
+        status: "Ready",
+      },
+      {
+        name: "Divider",
+        description: "Horizontal or vertical separator with optional label.",
+        href: "/components/divider",
         status: "Ready",
       },
       {
