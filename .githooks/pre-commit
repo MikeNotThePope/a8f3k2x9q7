@@ -9,7 +9,7 @@ bun run lint || { echo "Lint failed. Fix errors before committing."; exit 1; }
 echo "2/3 Type check..."
 bunx tsc --noEmit || { echo "Type check failed. Fix errors before committing."; exit 1; }
 
-echo "3/3 Unit tests..."
-bun run test || { echo "Tests failed. Fix errors before committing."; exit 1; }
+echo "3/3 Unit tests + coverage..."
+bun run test:coverage || { echo "Tests or coverage thresholds failed. Fix errors before committing."; exit 1; }
 
 echo "All checks passed!"
