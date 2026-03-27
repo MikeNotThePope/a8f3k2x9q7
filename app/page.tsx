@@ -188,6 +188,152 @@ const groups: ComponentGroup[] = [
       },
     ],
   },
+  {
+    title: "Demos",
+    description: "Full-page compositions showing components working together.",
+    components: [
+      {
+        name: "Unified Sign In",
+        description:
+          "Tabbed sign-in with password and magic link methods in one page.",
+        href: "/demos/unified-sign-in",
+        status: "Ready",
+      },
+      {
+        name: "Sign In",
+        description:
+          "Authentication page with form validation, social login, and loading states.",
+        href: "/demos/sign-in",
+        status: "Ready",
+      },
+      {
+        name: "Sign Up",
+        description:
+          "Registration flow with multi-field validation and success feedback.",
+        href: "/demos/sign-up",
+        status: "Ready",
+      },
+      {
+        name: "Check Email",
+        description:
+          "Waiting state after sign-up with resend action and guidance.",
+        href: "/demos/check-email",
+        status: "Ready",
+      },
+      {
+        name: "Verify Email",
+        description:
+          "Outcome page for email verification: success, expired, or invalid.",
+        href: "/demos/verify-email",
+        status: "Ready",
+      },
+      {
+        name: "Forgot Password",
+        description:
+          "Single-field form to request a password reset link.",
+        href: "/demos/forgot-password",
+        status: "Ready",
+      },
+      {
+        name: "Reset Password",
+        description:
+          "Set a new password with confirmation and validation.",
+        href: "/demos/reset-password",
+        status: "Ready",
+      },
+      {
+        name: "2FA Setup",
+        description:
+          "QR code scan, manual key entry, and recovery codes for two-factor auth.",
+        href: "/demos/2fa-setup",
+        status: "Ready",
+      },
+      {
+        name: "2FA Challenge",
+        description:
+          "TOTP code entry at login with method switching links.",
+        href: "/demos/2fa-challenge",
+        status: "Ready",
+      },
+      {
+        name: "2FA SMS",
+        description:
+          "SMS verification with masked phone, resend cooldown timer.",
+        href: "/demos/2fa-sms",
+        status: "Ready",
+      },
+      {
+        name: "2FA Recovery",
+        description:
+          "Recovery code entry as a fallback when authenticator is lost.",
+        href: "/demos/2fa-recovery",
+        status: "Ready",
+      },
+      {
+        name: "Magic Link",
+        description:
+          "Passwordless sign-in via email link with sent confirmation.",
+        href: "/demos/magic-link",
+        status: "Ready",
+      },
+      {
+        name: "Link Expired",
+        description:
+          "Dead-end page for expired or invalid links with recovery path.",
+        href: "/demos/link-expired",
+        status: "Ready",
+      },
+      {
+        name: "Rate Limited",
+        description:
+          "Too-many-attempts screen with live countdown timer.",
+        href: "/demos/rate-limited",
+        status: "Ready",
+      },
+      {
+        name: "Account Locked",
+        description:
+          "Security alert for locked accounts with reset and support options.",
+        href: "/demos/account-locked",
+        status: "Ready",
+      },
+      {
+        name: "Onboarding",
+        description:
+          "Profile setup with avatar, bio, role select, and notification prefs.",
+        href: "/demos/onboarding",
+        status: "Ready",
+      },
+      {
+        name: "Welcome",
+        description:
+          "Success/celebration screen after completing account setup.",
+        href: "/demos/welcome",
+        status: "Ready",
+      },
+      {
+        name: "Change Password",
+        description:
+          "Three-field password change from account settings.",
+        href: "/demos/change-password",
+        status: "Ready",
+      },
+      {
+        name: "Sessions",
+        description:
+          "Active device list with revoke confirmation dialogs.",
+        href: "/demos/sessions",
+        status: "Ready",
+      },
+      {
+        name: "Delete Account",
+        description:
+          "Destructive flow with type-to-confirm and final dialog.",
+        href: "/demos/delete-account",
+        status: "Ready",
+      },
+    ],
+  },
 ];
 
 function StatusBadge({ status }: { status: "Ready" | "In Progress" | "Planned" }) {
