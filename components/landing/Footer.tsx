@@ -49,7 +49,7 @@ export function Footer({
                   </h4>
                   <ul className="flex flex-col gap-2">
                     {group.links.map((link) => (
-                      <li key={link.href}>
+                      <li key={link.label}>
                         <a
                           href={link.href}
                           className="font-sans text-sm text-muted-foreground hover:text-foreground transition-colors"

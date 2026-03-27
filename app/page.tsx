@@ -189,6 +189,84 @@ const groups: ComponentGroup[] = [
     ],
   },
   {
+    title: "Landing",
+    description: "Sections and blocks for marketing and landing pages.",
+    components: [
+      {
+        name: "AnnouncementBanner",
+        description: "Dismissible top-of-page banner for announcements and promotions.",
+        href: "/components/announcement-banner",
+        status: "Ready",
+      },
+      {
+        name: "CTABanner",
+        description: "Call-to-action section with headline and action buttons.",
+        href: "/components/cta-banner",
+        status: "Ready",
+      },
+      {
+        name: "FAQ",
+        description: "Accordion-style frequently asked questions section.",
+        href: "/components/faq",
+        status: "Ready",
+      },
+      {
+        name: "FeatureSection",
+        description: "Grid of feature cards with icons and descriptions.",
+        href: "/components/feature-section",
+        status: "Ready",
+      },
+      {
+        name: "Footer",
+        description: "Site footer with link groups, branding, and newsletter.",
+        href: "/components/footer",
+        status: "Ready",
+      },
+      {
+        name: "Hero",
+        description: "Main hero section with headline, subtitle, and CTA buttons.",
+        href: "/components/hero",
+        status: "Ready",
+      },
+      {
+        name: "LogoCloud",
+        description: "Trusted-by logo strip for social proof.",
+        href: "/components/logo-cloud",
+        status: "Ready",
+      },
+      {
+        name: "NewsletterSignup",
+        description: "Email signup form with input and submit button.",
+        href: "/components/newsletter-signup",
+        status: "Ready",
+      },
+      {
+        name: "PricingTable",
+        description: "Pricing plan cards with feature lists and tier highlights.",
+        href: "/components/pricing-table",
+        status: "Ready",
+      },
+      {
+        name: "Section",
+        description: "Generic wrapper for landing page sections with consistent spacing.",
+        href: "/components/section",
+        status: "Ready",
+      },
+      {
+        name: "StatsBar",
+        description: "Metrics row displaying key numbers and stats.",
+        href: "/components/stats-bar",
+        status: "Ready",
+      },
+      {
+        name: "Testimonial",
+        description: "Customer quote cards with author details.",
+        href: "/components/testimonial",
+        status: "Ready",
+      },
+    ],
+  },
+  {
     title: "Demos",
     description: "Full-page compositions showing components working together.",
     components: [
