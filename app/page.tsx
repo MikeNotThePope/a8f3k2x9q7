@@ -19,11 +19,6 @@ import {
   Code,
   Zap,
   Star,
-  Sparkles,
-  LayoutGrid,
-  Terminal,
-  Layers,
-  Calendar as CalendarIcon,
 } from "lucide-react";
 
 import { CopyButton } from "./_components/CopyButton";
@@ -727,87 +722,6 @@ const demoGroup: DemoGroup = {
 };
 
 // Featured components to highlight in the marketing section
-interface FeaturedEntry extends ComponentEntry {
-  tag: string;
-  icon: React.ReactNode;
-}
-
-const featuredComponents: FeaturedEntry[] = [
-  {
-    name: "Button",
-    description: "Clickable action with size and variant options.",
-    href: "/components/button",
-    status: "Ready",
-    tag: "Most Popular",
-    icon: <Star className="h-5 w-5" />,
-  },
-  {
-    name: "Dialog",
-    description: "Modal dialog with header, body, footer, and overlay.",
-    href: "/components/dialog",
-    status: "Ready",
-    builtOn: "Radix Dialog",
-    tag: "Essential",
-    icon: <Layers className="h-5 w-5" />,
-  },
-  {
-    name: "DataTable",
-    description: "Feature-rich table with sorting, filtering, and pagination.",
-    href: "/components/data-table",
-    status: "Ready",
-    builtOn: "TanStack Table",
-    tag: "Complex Example",
-    icon: <LayoutGrid className="h-5 w-5" />,
-  },
-  {
-    name: "Command",
-    description: "Searchable command palette for actions and navigation.",
-    href: "/components/command",
-    status: "Ready",
-    builtOn: "cmdk",
-    tag: "Power User",
-    icon: <Terminal className="h-5 w-5" />,
-  },
-  {
-    name: "NavBar",
-    description: "Responsive navigation with auth states and mobile drawer.",
-    href: "/components/navbar",
-    status: "Ready",
-    tag: "Showcase",
-    icon: <Sparkles className="h-5 w-5" />,
-  },
-  {
-    name: "Calendar",
-    description: "Date picker with single, multiple, and range selection.",
-    href: "/components/calendar",
-    status: "Ready",
-    builtOn: "react-day-picker",
-    tag: "Feature-rich",
-    icon: <CalendarIcon className="h-5 w-5" />,
-  },
-];
-
-// Featured demos to highlight
-const featuredDemos: FeaturedEntry[] = [
-  {
-    name: "Landing Page",
-    description:
-      "Full SaaS landing page with hero, features, pricing, testimonials, FAQ, and more.",
-    href: "/demos/landing",
-    status: "Ready",
-    tag: "Full Composition",
-    icon: <Sparkles className="h-5 w-5" />,
-  },
-  {
-    name: "Unified Sign In",
-    description:
-      "Tabbed sign-in with password and magic link methods in one page.",
-    href: "/demos/unified-sign-in",
-    status: "Ready",
-    tag: "Auth Flow",
-    icon: <Layers className="h-5 w-5" />,
-  },
-];
 
 const sectionNavItems = [
   ...componentGroups.map((g) => ({ label: g.title, id: g.id })),
@@ -818,31 +732,6 @@ const totalComponents =
   componentGroups.reduce((sum, g) => sum + g.components.length, 0) +
   demoGroup.subGroups.reduce((sum, sg) => sum + sg.demos.length, 0);
 
-function FeaturedCard({ component }: { component: FeaturedEntry }) {
-  return (
-    <Card variant="interactive" asChild>
-      <NextLink href={component.href} className="block p-5 sm:p-7">
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <div className="flex items-center justify-center w-10 h-10 bg-primary/25 border-2 border-border text-primary shrink-0">
-            {component.icon}
-          </div>
-          <Badge variant="outline" size="sm">
-            {component.tag}
-          </Badge>
-        </div>
-        <Text variant="h4" className="mb-1">
-          {component.name}
-        </Text>
-        <Text variant="small">{component.description}</Text>
-        {component.builtOn && (
-          <span className="font-mono text-xs text-muted-foreground mt-2 inline-block">
-            {component.builtOn}
-          </span>
-        )}
-      </NextLink>
-    </Card>
-  );
-}
 
 export default function Home() {
   return (
@@ -1019,33 +908,6 @@ export default function Home() {
 
       {/* ── Section Nav (early for returning users) ── */}
       <SectionNav items={sectionNavItems} offsetTop={68} />
-
-      {/* ── Featured Components ── */}
-      <Section
-        title="Start Here"
-        subtitle="A hand-picked selection of our most popular components and full-page demos."
-      >
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredComponents.map((component) => (
-            <FeaturedCard key={component.name} component={component} />
-          ))}
-        </div>
-        <div className="mt-8">
-          <h3 className="font-head text-xs tracking-widest text-muted-foreground uppercase mb-4">
-            Full-page Demos
-          </h3>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {featuredDemos.map((demo) => (
-              <FeaturedCard key={demo.name} component={demo} />
-            ))}
-          </div>
-        </div>
-        <div className="mt-8 text-center">
-          <Button variant="outline" size="lg" asChild>
-            <a href="#primitives">View All {totalComponents}+ Components</a>
-          </Button>
-        </div>
-      </Section>
 
       {/* ── Component Catalog (client) ── */}
       <div className="bg-muted/30">
