@@ -18,38 +18,22 @@ import {
   Moon,
   Code,
   Zap,
+  Star,
+  Sparkles,
+  LayoutGrid,
+  Terminal,
+  Layers,
+  Calendar as CalendarIcon,
 } from "lucide-react";
 
 import { CopyButton } from "./_components/CopyButton";
 import { ComponentCatalog } from "./_components/ComponentCatalog";
 import { SiteNav } from "./_components/SiteNav";
-
-interface ComponentEntry {
-  name: string;
-  description: string;
-  href: string;
-  status: "Ready" | "In Progress" | "Planned";
-  builtOn?: string;
-}
-
-interface DemoSubGroup {
-  label: string;
-  demos: ComponentEntry[];
-}
-
-interface ComponentGroup {
-  title: string;
-  id: string;
-  description: string;
-  components: ComponentEntry[];
-}
-
-interface DemoGroup {
-  title: string;
-  id: string;
-  description: string;
-  subGroups: DemoSubGroup[];
-}
+import type {
+  ComponentEntry,
+  ComponentGroup,
+  DemoGroup,
+} from "./_components/types";
 
 const componentGroups: ComponentGroup[] = [
   {
@@ -736,12 +720,19 @@ const demoGroup: DemoGroup = {
 };
 
 // Featured components to highlight in the marketing section
-const featuredComponents: ComponentEntry[] = [
+interface FeaturedEntry extends ComponentEntry {
+  tag: string;
+  icon: React.ReactNode;
+}
+
+const featuredComponents: FeaturedEntry[] = [
   {
     name: "Button",
     description: "Clickable action with size and variant options.",
     href: "/components/button",
     status: "Ready",
+    tag: "Most Popular",
+    icon: <Star className="h-5 w-5" />,
   },
   {
     name: "Dialog",
@@ -749,6 +740,8 @@ const featuredComponents: ComponentEntry[] = [
     href: "/components/dialog",
     status: "Ready",
     builtOn: "Radix Dialog",
+    tag: "Essential",
+    icon: <Layers className="h-5 w-5" />,
   },
   {
     name: "DataTable",
@@ -756,6 +749,8 @@ const featuredComponents: ComponentEntry[] = [
     href: "/components/data-table",
     status: "Ready",
     builtOn: "TanStack Table",
+    tag: "Complex Example",
+    icon: <LayoutGrid className="h-5 w-5" />,
   },
   {
     name: "Command",
@@ -763,12 +758,16 @@ const featuredComponents: ComponentEntry[] = [
     href: "/components/command",
     status: "Ready",
     builtOn: "cmdk",
+    tag: "Power User",
+    icon: <Terminal className="h-5 w-5" />,
   },
   {
     name: "NavBar",
     description: "Responsive navigation with auth states and mobile drawer.",
     href: "/components/navbar",
     status: "Ready",
+    tag: "Showcase",
+    icon: <Sparkles className="h-5 w-5" />,
   },
   {
     name: "Calendar",
@@ -776,17 +775,21 @@ const featuredComponents: ComponentEntry[] = [
     href: "/components/calendar",
     status: "Ready",
     builtOn: "react-day-picker",
+    tag: "Feature-rich",
+    icon: <CalendarIcon className="h-5 w-5" />,
   },
 ];
 
 // Featured demos to highlight
-const featuredDemos: ComponentEntry[] = [
+const featuredDemos: FeaturedEntry[] = [
   {
     name: "Landing Page",
     description:
       "Full SaaS landing page with hero, features, pricing, testimonials, FAQ, and more.",
     href: "/demos/landing",
     status: "Ready",
+    tag: "Full Composition",
+    icon: <Sparkles className="h-5 w-5" />,
   },
   {
     name: "Unified Sign In",
@@ -794,6 +797,8 @@ const featuredDemos: ComponentEntry[] = [
       "Tabbed sign-in with password and magic link methods in one page.",
     href: "/demos/unified-sign-in",
     status: "Ready",
+    tag: "Auth Flow",
+    icon: <Layers className="h-5 w-5" />,
   },
 ];
 
@@ -806,11 +811,19 @@ const totalComponents =
   componentGroups.reduce((sum, g) => sum + g.components.length, 0) +
   demoGroup.subGroups.reduce((sum, sg) => sum + sg.demos.length, 0);
 
-function FeaturedCard({ component }: { component: ComponentEntry }) {
+function FeaturedCard({ component }: { component: FeaturedEntry }) {
   return (
     <Card variant="interactive" asChild>
-      <NextLink href={component.href} className="block p-4 sm:p-6">
-        <Text variant="h4" className="mb-2">
+      <NextLink href={component.href} className="block p-5 sm:p-7">
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <div className="flex items-center justify-center w-10 h-10 bg-primary/10 border-2 border-border text-primary shrink-0">
+            {component.icon}
+          </div>
+          <Badge variant="outline" size="sm">
+            {component.tag}
+          </Badge>
+        </div>
+        <Text variant="h4" className="mb-1">
           {component.name}
         </Text>
         <Text variant="small">{component.description}</Text>
@@ -827,6 +840,14 @@ function FeaturedCard({ component }: { component: ComponentEntry }) {
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
+      {/* ── Skip to content ── */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:bg-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:font-head focus:text-sm focus:border-2 focus:border-border focus:shadow-md"
+      >
+        Skip to main content
+      </a>
+
       {/* ── Announcement Banner ── */}
       <AnnouncementBanner>
         Substrate UI is open source &mdash;{" "}
@@ -842,6 +863,9 @@ export default function Home() {
 
       {/* ── Sticky Navigation Bar ── */}
       <SiteNav />
+
+      {/* ── Main content ── */}
+      <main id="main-content">
 
       {/* ── Hero ── */}
       <Hero
@@ -883,8 +907,8 @@ export default function Home() {
       <StatsBar
         stats={[
           { value: `${totalComponents}+`, label: "Components" },
-          { value: "100%", label: "Accessible" },
-          { value: "0", label: "Config Required" },
+          { value: "WAI-ARIA", label: "Compliant" },
+          { value: "1 CSS", label: "Import to Start" },
           { value: "100%", label: "TypeScript" },
         ]}
       />
@@ -895,15 +919,14 @@ export default function Home() {
         title="Get started in seconds"
         subtitle="Install the package, import the styles, and use any component."
       >
-        <ol className="grid gap-6 md:grid-cols-3 list-none p-0 m-0">
+        <ol role="list" className="grid gap-6 md:grid-cols-3 list-none p-0 m-0">
           <li className="border-2 p-6 bg-card shadow-md">
             <div className="font-head text-2xl text-primary mb-2" aria-hidden="true">1</div>
-            <h3 className="font-head text-lg mb-3">Install</h3>
+            <h3 className="font-head text-lg mb-3">Add the dependency</h3>
             <div className="flex items-center gap-2 bg-background border-2 border-border px-3 py-2">
               <code className="font-mono text-sm overflow-x-auto whitespace-nowrap flex-1">
-                npm i @mikenotthepope/substrate-ui
+                <span className="text-muted-foreground">{`"`}dependencies{`"`}: {`{`}</span> {`"`}@mikenotthepope/substrate-ui{`"`}: {`"`}latest{`"`} <span className="text-muted-foreground">{`}`}</span>
               </code>
-              <CopyButton text="npm i @mikenotthepope/substrate-ui" />
             </div>
           </li>
           <li className="border-2 p-6 bg-card shadow-md">
@@ -1005,23 +1028,11 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ── Catalog Transition ── */}
-      <div className="bg-background border-y-2 border-border">
-        <div className="mx-auto max-w-6xl px-4 py-10 text-center">
-          <Text variant="h2" className="mb-2">
-            Explore the Full Library
-          </Text>
-          <Text variant="body" className="text-muted-foreground">
-            Browse all {totalComponents}+ components organized by category, or search for exactly what you need.
-          </Text>
-        </div>
-      </div>
-
       {/* ── Section Nav ── */}
-      <SectionNav items={sectionNavItems} />
+      <SectionNav items={sectionNavItems} offsetTop={57} />
 
       {/* ── Component Catalog (client) ── */}
-      <div className="bg-background">
+      <div className="bg-muted/30">
         <ComponentCatalog
           componentGroups={componentGroups}
           demoGroup={demoGroup}
@@ -1060,17 +1071,27 @@ export default function Home() {
         }
       />
 
+      </main>
+
       {/* ── Footer ── */}
       <Footer
         brand="Substrate UI"
         tagline="A neobrutalist React component library. Open source and free to use."
         groups={[
           {
+            title: "Getting Started",
+            links: [
+              { label: "Install", href: "#quickstart" },
+              { label: "Design Tokens", href: "/tokens" },
+              { label: "TypeScript Setup", href: "#quickstart" },
+            ],
+          },
+          {
             title: "Resources",
             links: [
               { label: "Components", href: "#primitives" },
               { label: "Demos", href: "#demos" },
-              { label: "Design Tokens", href: "/tokens" },
+              { label: "Landing Page Demo", href: "/demos/landing" },
             ],
           },
           {
@@ -1083,6 +1104,14 @@ export default function Home() {
               {
                 label: "Issues",
                 href: "https://github.com/MikeNotThePope/substrate-ui/issues",
+              },
+              {
+                label: "Contributing",
+                href: "https://github.com/MikeNotThePope/substrate-ui",
+              },
+              {
+                label: "MIT License",
+                href: "https://github.com/MikeNotThePope/substrate-ui/blob/main/LICENSE",
               },
             ],
           },

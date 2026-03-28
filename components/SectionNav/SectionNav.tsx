@@ -11,9 +11,11 @@ export interface SectionNavItem {
 export interface ISectionNavProps {
   items: SectionNavItem[];
   className?: string;
+  /** Offset from top in pixels (e.g. to stack below a sticky header) */
+  offsetTop?: number;
 }
 
-export function SectionNav({ items, className }: ISectionNavProps) {
+export function SectionNav({ items, className, offsetTop }: ISectionNavProps) {
   const [activeId, setActiveId] = useState<string>(items[0]?.id ?? "");
 
   useEffect(() => {
@@ -47,15 +49,17 @@ export function SectionNav({ items, className }: ISectionNavProps) {
     <nav
       aria-label="Section navigation"
       className={cn(
-        "sticky top-0 z-10 bg-background text-foreground border-b-[4px] border-border",
+        "sticky z-30 bg-background text-foreground border-b-[4px] border-border",
         className,
       )}
+      style={{ top: offsetTop != null ? `${offsetTop}px` : 0 }}
     >
       <div className="mx-auto max-w-6xl px-4 flex items-center gap-1 overflow-x-auto">
         {items.map((item) => (
           <a
             key={item.id}
             href={`#${item.id}`}
+            aria-current={activeId === item.id ? "true" : undefined}
             className={cn(
               "font-head text-sm px-4 py-3 shrink-0 transition-colors duration-200",
               activeId === item.id

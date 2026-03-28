@@ -6,33 +6,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Text } from "@/components/ui/Text";
 import { Search, X } from "lucide-react";
-
-interface ComponentEntry {
-  name: string;
-  description: string;
-  href: string;
-  status: "Ready" | "In Progress" | "Planned";
-  builtOn?: string;
-}
-
-interface DemoSubGroup {
-  label: string;
-  demos: ComponentEntry[];
-}
-
-interface ComponentGroup {
-  title: string;
-  id: string;
-  description: string;
-  components: ComponentEntry[];
-}
-
-interface DemoGroup {
-  title: string;
-  id: string;
-  description: string;
-  subGroups: DemoSubGroup[];
-}
+import type { ComponentEntry, ComponentGroup, DemoGroup } from "./types";
 
 function ComponentCard({ component }: { component: ComponentEntry }) {
   return (
@@ -60,6 +34,14 @@ function ComponentCard({ component }: { component: ComponentEntry }) {
         )}
       </NextLink>
     </Card>
+  );
+}
+
+function matchesQuery(c: ComponentEntry, q: string): boolean {
+  return (
+    c.name.toLowerCase().includes(q) ||
+    c.description.toLowerCase().includes(q) ||
+    (c.builtOn?.toLowerCase().includes(q) ?? false)
   );
 }
 
@@ -97,11 +79,7 @@ export function ComponentCatalog({
     return componentGroups
       .map((group) => ({
         ...group,
-        components: group.components.filter(
-          (c) =>
-            c.name.toLowerCase().includes(q) ||
-            c.description.toLowerCase().includes(q),
-        ),
+        components: group.components.filter((c) => matchesQuery(c, q)),
       }))
       .filter((group) => group.components.length > 0);
   }, [searchQuery, componentGroups]);
@@ -112,41 +90,57 @@ export function ComponentCatalog({
     const filteredSubGroups = demoGroup.subGroups
       .map((sg) => ({
         ...sg,
-        demos: sg.demos.filter(
-          (d) =>
-            d.name.toLowerCase().includes(q) ||
-            d.description.toLowerCase().includes(q),
-        ),
+        demos: sg.demos.filter((d) => matchesQuery(d, q)),
       }))
       .filter((sg) => sg.demos.length > 0);
     return { ...demoGroup, subGroups: filteredSubGroups };
   }, [searchQuery, demoGroup]);
 
-  const hasResults =
-    filteredGroups.length > 0 || filteredDemoGroup.subGroups.length > 0;
+  const totalCount = componentGroups.reduce(
+    (sum, g) => sum + g.components.length,
+    0,
+  ) + demoGroup.subGroups.reduce((sum, sg) => sum + sg.demos.length, 0);
+
+  const filteredCount =
+    filteredGroups.reduce((sum, g) => sum + g.components.length, 0) +
+    filteredDemoGroup.subGroups.reduce((sum, sg) => sum + sg.demos.length, 0);
+
+  const hasResults = filteredCount > 0;
+  const isFiltering = searchQuery.trim().length > 0;
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-12 flex flex-col gap-16 w-full">
+    <div className="mx-auto max-w-6xl px-4 py-12 flex flex-col gap-16 w-full">
       {/* Search/filter */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-        <input
-          ref={searchRef}
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search components...  ( / )"
-          aria-label="Search components"
-          className="w-full border-2 border-border bg-card px-10 py-3 font-sans text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-        />
-        {searchQuery && (
-          <button
-            onClick={() => setSearchQuery("")}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-muted transition-colors cursor-pointer"
-            aria-label="Clear search"
-          >
-            <X className="h-4 w-4 text-muted-foreground" />
-          </button>
+      <div>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          <input
+            ref={searchRef}
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search components..."
+            aria-label="Search components"
+            className="w-full border-2 border-border bg-card pl-10 pr-16 py-3 font-sans text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+          {searchQuery ? (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-muted transition-colors cursor-pointer"
+              aria-label="Clear search"
+            >
+              <X className="h-4 w-4 text-muted-foreground" />
+            </button>
+          ) : (
+            <kbd className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none inline-flex items-center justify-center h-6 w-6 border-2 border-border bg-muted font-mono text-xs text-muted-foreground">
+              /
+            </kbd>
+          )}
+        </div>
+        {isFiltering && (
+          <p className="mt-2 text-sm text-muted-foreground font-sans">
+            Showing {filteredCount} of {totalCount} components
+          </p>
         )}
       </div>
 
@@ -200,7 +194,7 @@ export function ComponentCatalog({
               <div key={subGroup.label}>
                 <Text
                   variant="body"
-                  className="font-head text-xs tracking-widest text-muted-foreground uppercase mb-4"
+                  className="font-head text-xs tracking-widest text-muted-foreground uppercase mb-4 border-l-4 border-primary pl-3"
                 >
                   {subGroup.label}
                 </Text>
@@ -214,6 +208,6 @@ export function ComponentCatalog({
           </div>
         </section>
       )}
-    </main>
+    </div>
   );
 }
