@@ -19,7 +19,15 @@ export function AnnouncementBanner({
   dismissible = true,
   className,
 }: AnnouncementBannerProps) {
-  const [visible, setVisible] = React.useState(true);
+  const [visible, setVisible] = React.useState(() => {
+    if (typeof window === "undefined") return true;
+    return sessionStorage.getItem("announcement-dismissed") !== "true";
+  });
+
+  const handleDismiss = () => {
+    setVisible(false);
+    sessionStorage.setItem("announcement-dismissed", "true");
+  };
 
   if (!visible) return null;
 
@@ -34,7 +42,7 @@ export function AnnouncementBanner({
         <p className="font-sans text-sm text-center flex-1">{children}</p>
         {dismissible && (
           <button
-            onClick={() => setVisible(false)}
+            onClick={handleDismiss}
             className="shrink-0 p-2 min-w-[44px] min-h-[44px] inline-flex items-center justify-center hover:bg-foreground/10 transition-colors cursor-pointer"
             aria-label="Dismiss"
           >

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Archivo_Black, Space_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "@/components/ui/Sonner";
 import "./globals.css";
 
 const sansFont = Space_Grotesk({
@@ -57,6 +58,7 @@ export default function RootLayout({
       <body className="min-h-screen">
         <ThemeProvider>
           {children}
+          <Toaster />
         </ThemeProvider>
         <Analytics />
       </body>

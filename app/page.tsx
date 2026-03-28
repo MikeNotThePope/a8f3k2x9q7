@@ -1,13 +1,9 @@
-"use client";
-
-import { useState, useMemo } from "react";
 import NextLink from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Text } from "@/components/ui/Text";
 import { Button } from "@/components/ui/Button";
 import { SectionNav } from "@/components/SectionNav/SectionNav";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Hero } from "@/components/landing/Hero";
 import { StatsBar } from "@/components/landing/StatsBar";
 import { FeatureSection } from "@/components/landing/FeatureSection";
@@ -15,7 +11,6 @@ import { Section } from "@/components/landing/Section";
 import { CTABanner } from "@/components/landing/CTABanner";
 import { Footer } from "@/components/landing/Footer";
 import { AnnouncementBanner } from "@/components/landing/AnnouncementBanner";
-import { Drawer } from "@/components/ui/Drawer";
 import {
   Cog,
   Paintbrush,
@@ -23,12 +18,11 @@ import {
   Moon,
   Code,
   Zap,
-  AlignJustify,
-  X,
-  Search,
-  Copy,
-  Check,
 } from "lucide-react";
+
+import { CopyButton } from "./_components/CopyButton";
+import { ComponentCatalog } from "./_components/ComponentCatalog";
+import { SiteNav } from "./_components/SiteNav";
 
 interface ComponentEntry {
   name: string;
@@ -808,31 +802,11 @@ const sectionNavItems = [
   { label: demoGroup.title, id: demoGroup.id },
 ];
 
-function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false);
+const totalComponents =
+  componentGroups.reduce((sum, g) => sum + g.components.length, 0) +
+  demoGroup.subGroups.reduce((sum, sg) => sum + sg.demos.length, 0);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <button
-      onClick={handleCopy}
-      className="shrink-0 p-1.5 hover:bg-foreground/10 transition-colors cursor-pointer"
-      aria-label={copied ? "Copied" : "Copy to clipboard"}
-    >
-      {copied ? (
-        <Check className="h-4 w-4 text-green-600" />
-      ) : (
-        <Copy className="h-4 w-4 text-muted-foreground" />
-      )}
-    </button>
-  );
-}
-
-function ComponentCard({ component }: { component: ComponentEntry }) {
+function FeaturedCard({ component }: { component: ComponentEntry }) {
   return (
     <Card variant="interactive" asChild>
       <NextLink href={component.href} className="block p-4 sm:p-6">
@@ -845,69 +819,12 @@ function ComponentCard({ component }: { component: ComponentEntry }) {
             {component.builtOn}
           </span>
         )}
-        {component.status !== "Ready" && (
-          <Badge
-            variant={
-              component.status === "In Progress" ? "warning" : "outline"
-            }
-            size="sm"
-            className="mt-2"
-          >
-            {component.status}
-          </Badge>
-        )}
       </NextLink>
     </Card>
   );
 }
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const totalComponents =
-    componentGroups.reduce((sum, g) => sum + g.components.length, 0) +
-    demoGroup.subGroups.reduce((sum, sg) => sum + sg.demos.length, 0);
-
-  const filteredGroups = useMemo(() => {
-    if (!searchQuery.trim()) return componentGroups;
-    const q = searchQuery.toLowerCase();
-    return componentGroups
-      .map((group) => ({
-        ...group,
-        components: group.components.filter(
-          (c) =>
-            c.name.toLowerCase().includes(q) ||
-            c.description.toLowerCase().includes(q),
-        ),
-      }))
-      .filter((group) => group.components.length > 0);
-  }, [searchQuery]);
-
-  const filteredDemoGroup = useMemo(() => {
-    if (!searchQuery.trim()) return demoGroup;
-    const q = searchQuery.toLowerCase();
-    const filteredSubGroups = demoGroup.subGroups
-      .map((sg) => ({
-        ...sg,
-        demos: sg.demos.filter(
-          (d) =>
-            d.name.toLowerCase().includes(q) ||
-            d.description.toLowerCase().includes(q),
-        ),
-      }))
-      .filter((sg) => sg.demos.length > 0);
-    return { ...demoGroup, subGroups: filteredSubGroups };
-  }, [searchQuery]);
-
-  const hasResults =
-    filteredGroups.length > 0 || filteredDemoGroup.subGroups.length > 0;
-
-  const navLinks = [
-    { label: "Components", href: "#primitives" },
-    { label: "Demos", href: "#demos" },
-    { label: "Tokens", href: "/tokens" },
-  ];
-
   return (
     <div className="min-h-screen flex flex-col">
       {/* ── Announcement Banner ── */}
@@ -923,98 +840,8 @@ export default function Home() {
         </a>
       </AnnouncementBanner>
 
-      {/* ── Navigation Bar ── */}
-      <nav
-        aria-label="Main navigation"
-        className="bg-background text-foreground border-b-[4px] border-border"
-      >
-        <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-          <NextLink href="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-primary flex items-center justify-center border-2 border-border">
-              <span className="font-head text-primary-foreground text-sm">S</span>
-            </div>
-            <span className="font-head text-lg">Substrate UI</span>
-          </NextLink>
-          <div className="flex items-center gap-3">
-            {navLinks.map((link) => (
-              <NextLink
-                key={link.label}
-                href={link.href}
-                className="hidden sm:inline-block font-head text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {link.label}
-              </NextLink>
-            ))}
-            <a
-              href="https://github.com/MikeNotThePope/substrate-ui"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-background text-foreground border-2 border-border px-3 py-1 font-head text-sm shadow-sm hover:shadow-none transition-shadow"
-              aria-label="View on GitHub"
-            >
-              <svg
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="w-4 h-4"
-                aria-hidden="true"
-              >
-                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-              </svg>
-              <span className="hidden sm:inline">GitHub</span>
-            </a>
-            <ThemeToggle variant="outline" />
-
-            {/* Mobile menu button */}
-            <Drawer direction="right">
-              <Drawer.Trigger asChild>
-                <button
-                  className="sm:hidden inline-flex items-center justify-center w-9 h-9 border-2 border-border bg-background hover:bg-muted transition-colors cursor-pointer"
-                  aria-label="Open menu"
-                >
-                  <AlignJustify className="h-4 w-4" />
-                </button>
-              </Drawer.Trigger>
-              <Drawer.Content>
-                <Drawer.Header className="border-b-2">
-                  <div className="flex items-center justify-between">
-                    <Drawer.Title>Menu</Drawer.Title>
-                    <Drawer.Close asChild>
-                      <button
-                        className="inline-flex items-center justify-center w-9 h-9 border-2 border-border bg-background hover:bg-muted transition-colors cursor-pointer"
-                        aria-label="Close menu"
-                      >
-                        <X className="h-4 w-4" />
-                      </button>
-                    </Drawer.Close>
-                  </div>
-                </Drawer.Header>
-                <div className="flex flex-col p-4 gap-1">
-                  {navLinks.map((link) => (
-                    <Drawer.Close key={link.label} asChild>
-                      <NextLink
-                        href={link.href}
-                        className="font-head text-base py-3 px-4 hover:bg-muted transition-colors"
-                      >
-                        {link.label}
-                      </NextLink>
-                    </Drawer.Close>
-                  ))}
-                  <Drawer.Close asChild>
-                    <a
-                      href="https://github.com/MikeNotThePope/substrate-ui"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-head text-base py-3 px-4 hover:bg-muted transition-colors"
-                    >
-                      GitHub
-                    </a>
-                  </Drawer.Close>
-                </div>
-              </Drawer.Content>
-            </Drawer>
-          </div>
-        </div>
-      </nav>
+      {/* ── Sticky Navigation Bar ── */}
+      <SiteNav />
 
       {/* ── Hero ── */}
       <Hero
@@ -1029,7 +856,7 @@ export default function Home() {
             <span className="text-primary">Unapologetically bold.</span>
           </>
         }
-        subtitle="Hard shadows, bold borders, and sharp corners — built on Radix UI primitives with Tailwind CSS v4. Accessible, themeable, and ready to ship."
+        subtitle="The component library built for neobrutalist design. 80+ accessible Radix primitives with hard shadows, bold borders, and zero configuration."
         actions={
           <>
             <Button size="lg" asChild>
@@ -1041,23 +868,24 @@ export default function Home() {
           </>
         }
       >
-        {/* Install snippet with copy button */}
-        <div className="mt-2 font-mono text-sm bg-card text-card-foreground border-2 border-border px-6 py-3 shadow-md flex items-center gap-3">
+        {/* Install snippet with copy button — short alias on mobile */}
+        <div className="mt-2 font-mono text-sm bg-card text-card-foreground border-2 border-border px-3 sm:px-6 py-3 shadow-md flex items-center gap-3">
           <code className="overflow-x-auto whitespace-nowrap flex-1">
             <span className="text-muted-foreground select-none">$ </span>
-            npm install @mikenotthepope/substrate-ui
+            <span className="hidden sm:inline">npm install @mikenotthepope/substrate-ui</span>
+            <span className="sm:hidden">npm i @mikenotthepope/substrate-ui</span>
           </code>
           <CopyButton text="npm install @mikenotthepope/substrate-ui" />
         </div>
       </Hero>
 
-      {/* ── Stats Bar ── */}
+      {/* ── Stats Bar — all quantitative ── */}
       <StatsBar
         stats={[
           { value: `${totalComponents}+`, label: "Components" },
-          { value: "Radix", label: "Accessible Primitives" },
-          { value: "Tailwind v4", label: "Styling Engine" },
-          { value: "TypeScript", label: "Full Type Safety" },
+          { value: "100%", label: "Accessible" },
+          { value: "0", label: "Config Required" },
+          { value: "100%", label: "TypeScript" },
         ]}
       />
 
@@ -1067,7 +895,7 @@ export default function Home() {
         title="Get started in seconds"
         subtitle="Install the package, import the styles, and use any component."
       >
-        <ol className="grid gap-6 sm:grid-cols-3 list-none p-0 m-0">
+        <ol className="grid gap-6 md:grid-cols-3 list-none p-0 m-0">
           <li className="border-2 p-6 bg-card shadow-md">
             <div className="font-head text-2xl text-primary mb-2" aria-hidden="true">1</div>
             <h3 className="font-head text-lg mb-3">Install</h3>
@@ -1152,12 +980,12 @@ export default function Home() {
 
       {/* ── Featured Components ── */}
       <Section
-        title="Featured Components"
-        subtitle="A hand-picked selection of components and full-page demos."
+        title="Start Here"
+        subtitle="A hand-picked selection of our most popular components and full-page demos."
       >
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featuredComponents.map((component) => (
-            <ComponentCard key={component.name} component={component} />
+            <FeaturedCard key={component.name} component={component} />
           ))}
         </div>
         <div className="mt-8">
@@ -1166,7 +994,7 @@ export default function Home() {
           </Text>
           <div className="grid gap-4 sm:grid-cols-2">
             {featuredDemos.map((demo) => (
-              <ComponentCard key={demo.name} component={demo} />
+              <FeaturedCard key={demo.name} component={demo} />
             ))}
           </div>
         </div>
@@ -1177,91 +1005,28 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ── Component Catalog ── */}
+      {/* ── Catalog Transition ── */}
+      <div className="bg-background border-y-2 border-border">
+        <div className="mx-auto max-w-6xl px-4 py-10 text-center">
+          <Text variant="h2" className="mb-2">
+            Explore the Full Library
+          </Text>
+          <Text variant="body" className="text-muted-foreground">
+            Browse all {totalComponents}+ components organized by category, or search for exactly what you need.
+          </Text>
+        </div>
+      </div>
+
+      {/* ── Section Nav ── */}
       <SectionNav items={sectionNavItems} />
 
-      <main className="mx-auto max-w-6xl px-4 py-12 flex flex-col gap-16 w-full">
-        {/* Search/filter */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search components..."
-            className="w-full border-2 border-border bg-card px-10 py-3 font-sans text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-muted transition-colors cursor-pointer"
-              aria-label="Clear search"
-            >
-              <X className="h-4 w-4 text-muted-foreground" />
-            </button>
-          )}
-        </div>
-
-        {!hasResults && (
-          <div className="text-center py-12">
-            <Text variant="body" className="text-muted-foreground">
-              No components found for &ldquo;{searchQuery}&rdquo;
-            </Text>
-          </div>
-        )}
-
-        {filteredGroups.map((group) => (
-          <section key={group.id} id={group.id}>
-            <Text variant="h3" className="mb-1">
-              {group.title}{" "}
-              <span className="text-muted-foreground font-sans text-lg">
-                ({group.components.length})
-              </span>
-            </Text>
-            <Text variant="small" className="mb-6">
-              {group.description}
-            </Text>
-
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {group.components.map((component) => (
-                <ComponentCard key={component.name} component={component} />
-              ))}
-            </div>
-          </section>
-        ))}
-
-        {filteredDemoGroup.subGroups.length > 0 && (
-          <section id={demoGroup.id}>
-            <Text variant="h3" className="mb-1">
-              {demoGroup.title}{" "}
-              <span className="text-muted-foreground font-sans text-lg">
-                ({filteredDemoGroup.subGroups.reduce((s, sg) => s + sg.demos.length, 0)})
-              </span>
-            </Text>
-            <Text variant="small" className="mb-6">
-              {demoGroup.description}
-            </Text>
-
-            <div className="flex flex-col gap-10">
-              {filteredDemoGroup.subGroups.map((subGroup) => (
-                <div key={subGroup.label}>
-                  <Text
-                    variant="body"
-                    className="font-head text-xs tracking-widest text-muted-foreground uppercase mb-4"
-                  >
-                    {subGroup.label}
-                  </Text>
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {subGroup.demos.map((demo) => (
-                      <ComponentCard key={demo.name} component={demo} />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-      </main>
+      {/* ── Component Catalog (client) ── */}
+      <div className="bg-background">
+        <ComponentCatalog
+          componentGroups={componentGroups}
+          demoGroup={demoGroup}
+        />
+      </div>
 
       {/* ── CTA Banner ── */}
       <CTABanner
