@@ -29,6 +29,8 @@ import {
 import { CopyButton } from "./_components/CopyButton";
 import { ComponentCatalog } from "./_components/ComponentCatalog";
 import { SiteNav } from "./_components/SiteNav";
+import { CommandPalette } from "./_components/CommandPalette";
+import { BackToTop } from "./_components/BackToTop";
 import type {
   ComponentEntry,
   ComponentGroup,
@@ -545,6 +547,18 @@ const demoGroup: DemoGroup = {
   description: "Full-page compositions showing components working together.",
   subGroups: [
     {
+      label: "Full Pages",
+      demos: [
+        {
+          name: "Landing Page",
+          description:
+            "Full SaaS landing page with hero, features, pricing, testimonials, FAQ, and more.",
+          href: "/demos/landing",
+          status: "Ready",
+        },
+      ],
+    },
+    {
       label: "Authentication",
       demos: [
         {
@@ -707,13 +721,6 @@ const demoGroup: DemoGroup = {
           href: "/demos/delete-account",
           status: "Ready",
         },
-        {
-          name: "Landing Page",
-          description:
-            "Full SaaS landing page with hero, features, pricing, testimonials, FAQ, and more.",
-          href: "/demos/landing",
-          status: "Ready",
-        },
       ],
     },
   ],
@@ -816,7 +823,7 @@ function FeaturedCard({ component }: { component: FeaturedEntry }) {
     <Card variant="interactive" asChild>
       <NextLink href={component.href} className="block p-5 sm:p-7">
         <div className="flex items-start justify-between gap-3 mb-3">
-          <div className="flex items-center justify-center w-10 h-10 bg-primary/10 border-2 border-border text-primary shrink-0">
+          <div className="flex items-center justify-center w-10 h-10 bg-primary/25 border-2 border-border text-primary shrink-0">
             {component.icon}
           </div>
           <Badge variant="outline" size="sm">
@@ -863,6 +870,15 @@ export default function Home() {
 
       {/* ── Sticky Navigation Bar ── */}
       <SiteNav />
+
+      {/* ── Global command palette ── */}
+      <CommandPalette
+        componentGroups={componentGroups}
+        demoGroup={demoGroup}
+      />
+
+      {/* ── Back to top ── */}
+      <BackToTop />
 
       {/* ── Main content ── */}
       <main id="main-content">
@@ -1001,6 +1017,9 @@ export default function Home() {
         />
       </Section>
 
+      {/* ── Section Nav (early for returning users) ── */}
+      <SectionNav items={sectionNavItems} offsetTop={68} />
+
       {/* ── Featured Components ── */}
       <Section
         title="Start Here"
@@ -1012,9 +1031,9 @@ export default function Home() {
           ))}
         </div>
         <div className="mt-8">
-          <Text variant="body" className="font-head text-xs tracking-widest text-muted-foreground uppercase mb-4">
+          <h3 className="font-head text-xs tracking-widest text-muted-foreground uppercase mb-4">
             Full-page Demos
-          </Text>
+          </h3>
           <div className="grid gap-4 sm:grid-cols-2">
             {featuredDemos.map((demo) => (
               <FeaturedCard key={demo.name} component={demo} />
@@ -1027,9 +1046,6 @@ export default function Home() {
           </Button>
         </div>
       </Section>
-
-      {/* ── Section Nav ── */}
-      <SectionNav items={sectionNavItems} offsetTop={57} />
 
       {/* ── Component Catalog (client) ── */}
       <div className="bg-muted/30">

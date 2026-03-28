@@ -4,7 +4,7 @@ import { cva, VariantProps } from "class-variance-authority";
 
 // ─── Variants ───
 
-export const sectionVariants = cva("w-full py-16 lg:py-24", {
+export const sectionVariants = cva("w-full py-16 lg:py-24 scroll-mt-[120px]", {
   variants: {
     background: {
       default: "bg-background",

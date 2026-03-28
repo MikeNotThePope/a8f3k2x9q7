@@ -64,7 +64,7 @@ export function ComponentCatalog({
       ) {
         return;
       }
-      if (e.key === "/" || (e.metaKey && e.key === "k")) {
+      if (e.key === "/") {
         e.preventDefault();
         searchRef.current?.focus();
       }
@@ -121,7 +121,7 @@ export function ComponentCatalog({
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search components..."
             aria-label="Search components"
-            className="w-full border-2 border-border bg-card pl-10 pr-16 py-3 font-sans text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full border-2 border-border bg-card pl-10 pr-16 py-3 font-sans text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary shadow-[4px_4px_0_0_var(--border)] focus:shadow-none transition-shadow"
           />
           {searchQuery ? (
             <button
@@ -153,7 +153,7 @@ export function ComponentCatalog({
       )}
 
       {filteredGroups.map((group) => (
-        <section key={group.id} id={group.id}>
+        <section key={group.id} id={group.id} className="scroll-mt-[120px]">
           <Text variant="h3" className="mb-1">
             {group.title}{" "}
             <span className="text-muted-foreground font-sans text-lg">
@@ -173,7 +173,7 @@ export function ComponentCatalog({
       ))}
 
       {filteredDemoGroup.subGroups.length > 0 && (
-        <section id={demoGroup.id}>
+        <section id={demoGroup.id} className="scroll-mt-[120px]">
           <Text variant="h3" className="mb-1">
             {demoGroup.title}{" "}
             <span className="text-muted-foreground font-sans text-lg">

@@ -59,7 +59,7 @@ export function SectionNav({ items, className, offsetTop }: ISectionNavProps) {
           <a
             key={item.id}
             href={`#${item.id}`}
-            aria-current={activeId === item.id ? "true" : undefined}
+            aria-current={activeId === item.id ? "location" : undefined}
             className={cn(
               "font-head text-sm px-4 py-3 shrink-0 transition-colors duration-200",
               activeId === item.id
