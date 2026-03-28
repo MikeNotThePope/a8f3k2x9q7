@@ -1,22 +1,22 @@
 import Link from "next/link";
 
 const colors = [
-  { token: "--background", light: "#fff", dark: "#1a1a1a", tw: "bg-background" },
-  { token: "--foreground", light: "#000", dark: "#f5f5f5", tw: "bg-foreground" },
-  { token: "--primary", light: "#ffdb33", dark: "#ffdb33", tw: "bg-primary" },
-  { token: "--primary-hover", light: "#ffcc00", dark: "#ffcc00", tw: "bg-primary-hover" },
-  { token: "--primary-foreground", light: "#000", dark: "#000", tw: "bg-primary-foreground" },
-  { token: "--secondary", light: "#000", dark: "#3a3a3a", tw: "bg-secondary" },
-  { token: "--secondary-foreground", light: "#fff", dark: "#f5f5f5", tw: "bg-secondary-foreground" },
-  { token: "--card", light: "#fff", dark: "#242424", tw: "bg-card" },
-  { token: "--card-foreground", light: "#000", dark: "#f5f5f5", tw: "bg-card-foreground" },
-  { token: "--muted", light: "#d5d5d5", dark: "#3f3f46", tw: "bg-muted" },
-  { token: "--muted-foreground", light: "#444", dark: "#a0a0a0", tw: "bg-muted-foreground" },
-  { token: "--accent", light: "#fae583", dark: "#fae583", tw: "bg-accent" },
-  { token: "--accent-foreground", light: "#000", dark: "#000", tw: "bg-accent-foreground" },
-  { token: "--destructive", light: "#e63946", dark: "#e63946", tw: "bg-destructive" },
-  { token: "--destructive-foreground", light: "#fff", dark: "#fff", tw: "bg-destructive-foreground" },
-  { token: "--border", light: "#000", dark: "#5c5c5c", tw: "bg-border" },
+  { token: "--background", tw: "bg-background" },
+  { token: "--foreground", tw: "bg-foreground" },
+  { token: "--primary", tw: "bg-primary" },
+  { token: "--primary-hover", tw: "bg-primary-hover" },
+  { token: "--primary-foreground", tw: "bg-primary-foreground" },
+  { token: "--secondary", tw: "bg-secondary" },
+  { token: "--secondary-foreground", tw: "bg-secondary-foreground" },
+  { token: "--card", tw: "bg-card" },
+  { token: "--card-foreground", tw: "bg-card-foreground" },
+  { token: "--muted", tw: "bg-muted" },
+  { token: "--muted-foreground", tw: "bg-muted-foreground" },
+  { token: "--accent", tw: "bg-accent" },
+  { token: "--accent-foreground", tw: "bg-accent-foreground" },
+  { token: "--destructive", tw: "bg-destructive" },
+  { token: "--destructive-foreground", tw: "bg-destructive-foreground" },
+  { token: "--border", tw: "bg-border" },
 ];
 
 const spacing = [
@@ -92,8 +92,6 @@ export default function TokensPage() {
                 <tr className="border-b-2 bg-muted">
                   <th className="text-left p-3 font-head">Swatch</th>
                   <th className="text-left p-3 font-head">Token</th>
-                  <th className="text-left p-3 font-head">Light</th>
-                  <th className="text-left p-3 font-head">Dark</th>
                   <th className="text-left p-3 font-head">Tailwind</th>
                 </tr>
               </thead>
@@ -101,22 +99,13 @@ export default function TokensPage() {
                 {colors.map((c) => (
                   <tr key={c.token} className="border-b last:border-b-0">
                     <td className="p-3">
-                      <div className="flex gap-1">
-                        <div
-                          className="w-8 h-8 border-2 border-border"
-                          style={{ backgroundColor: c.light }}
-                          title={`Light: ${c.light}`}
-                        />
-                        <div
-                          className="w-8 h-8 border-2 border-border"
-                          style={{ backgroundColor: c.dark }}
-                          title={`Dark: ${c.dark}`}
-                        />
-                      </div>
+                      <div
+                        className="w-8 h-8 border-2 border-border"
+                        style={{ backgroundColor: `var(${c.token})` }}
+                        title={c.token}
+                      />
                     </td>
                     <td className="p-3 font-mono text-xs">{c.token}</td>
-                    <td className="p-3 font-mono text-xs text-muted-foreground">{c.light}</td>
-                    <td className="p-3 font-mono text-xs text-muted-foreground">{c.dark}</td>
                     <td className="p-3 font-mono text-xs text-muted-foreground">{c.tw}</td>
                   </tr>
                 ))}
