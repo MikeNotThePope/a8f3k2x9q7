@@ -832,6 +832,7 @@ export default function Home() {
               <code className="font-mono text-sm overflow-x-auto whitespace-nowrap flex-1 min-w-0">
                 <span className="text-muted-foreground">{`"`}dependencies{`"`}: {`{`}</span> {`"`}@mikenotthepope/substrateui{`"`}: {`"`}latest{`"`} <span className="text-muted-foreground">{`}`}</span>
               </code>
+              <CopyButton text={`"@mikenotthepope/substrateui": "latest"`} />
             </div>
           </li>
           <li className="border-2 p-6 bg-card shadow-md overflow-hidden">

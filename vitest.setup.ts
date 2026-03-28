@@ -23,6 +23,14 @@ if (!Element.prototype.releasePointerCapture) {
   Element.prototype.releasePointerCapture = () => {};
 }
 
+// Stub HTMLCanvasElement.getContext for jsdom (used by chart/canvas components)
+HTMLCanvasElement.prototype.getContext = (() => null) as typeof HTMLCanvasElement.prototype.getContext;
+
+// Suppress jsdom "not implemented" warnings for getComputedStyle with pseudo-elements
+// jsdom warns when a pseudo-element argument is passed; strip it to avoid noise
+const _origGetComputedStyle = window.getComputedStyle;
+window.getComputedStyle = (elt: Element) => _origGetComputedStyle(elt);
+
 afterEach(() => {
   cleanup();
 });
