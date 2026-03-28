@@ -936,30 +936,30 @@ export default function Home() {
         subtitle="Install the package, import the styles, and use any component."
       >
         <ol role="list" className="grid gap-6 md:grid-cols-3 list-none p-0 m-0">
-          <li className="border-2 p-6 bg-card shadow-md">
+          <li className="border-2 p-6 bg-card shadow-md overflow-hidden">
             <div className="font-head text-2xl text-primary mb-2" aria-hidden="true">1</div>
             <h3 className="font-head text-lg mb-3">Add the dependency</h3>
-            <div className="flex items-center gap-2 bg-background border-2 border-border px-3 py-2">
-              <code className="font-mono text-sm overflow-x-auto whitespace-nowrap flex-1">
+            <div className="flex items-center gap-2 bg-background border-2 border-border px-3 py-2 min-w-0">
+              <code className="font-mono text-sm overflow-x-auto whitespace-nowrap flex-1 min-w-0">
                 <span className="text-muted-foreground">{`"`}dependencies{`"`}: {`{`}</span> {`"`}@mikenotthepope/substrate-ui{`"`}: {`"`}latest{`"`} <span className="text-muted-foreground">{`}`}</span>
               </code>
             </div>
           </li>
-          <li className="border-2 p-6 bg-card shadow-md">
+          <li className="border-2 p-6 bg-card shadow-md overflow-hidden">
             <div className="font-head text-2xl text-primary mb-2" aria-hidden="true">2</div>
             <h3 className="font-head text-lg mb-3">Import styles</h3>
-            <div className="flex items-center gap-2 bg-background border-2 border-border px-3 py-2">
-              <code className="font-mono text-sm overflow-x-auto whitespace-nowrap flex-1">
+            <div className="flex items-center gap-2 bg-background border-2 border-border px-3 py-2 min-w-0">
+              <code className="font-mono text-sm overflow-x-auto whitespace-nowrap flex-1 min-w-0">
                 import &quot;@mikenotthepope/substrate-ui/styles&quot;
               </code>
               <CopyButton text='import "@mikenotthepope/substrate-ui/styles"' />
             </div>
           </li>
-          <li className="border-2 p-6 bg-card shadow-md">
+          <li className="border-2 p-6 bg-card shadow-md overflow-hidden">
             <div className="font-head text-2xl text-primary mb-2" aria-hidden="true">3</div>
             <h3 className="font-head text-lg mb-3">Use components</h3>
-            <div className="flex items-center gap-2 bg-background border-2 border-border px-3 py-2">
-              <code className="font-mono text-sm overflow-x-auto whitespace-nowrap flex-1">
+            <div className="flex items-center gap-2 bg-background border-2 border-border px-3 py-2 min-w-0">
+              <code className="font-mono text-sm overflow-x-auto whitespace-nowrap flex-1 min-w-0">
                 {`import { Button } from "@mikenotthepope/substrate-ui"`}
               </code>
               <CopyButton text='import { Button } from "@mikenotthepope/substrate-ui"' />
