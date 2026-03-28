@@ -214,6 +214,13 @@ substrate-ui/
 └── tsup.config.ts        # Library build config
 ```
 
+## Acknowledgements
+
+Substrate UI draws inspiration from these projects:
+
+- [neobrutalism-components](https://github.com/ekmas/neobrutalism-components) by ekmas
+- [RetroUI](https://github.com/logging-studio/retroui) by Logging Studio
+
 ## License
 
 [MIT](LICENSE)
