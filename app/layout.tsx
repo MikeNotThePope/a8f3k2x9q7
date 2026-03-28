@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Bricolage_Grotesque, Space_Mono } from "next/font/google";
+import { Space_Grotesk, Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/Sonner";
@@ -19,7 +19,7 @@ const headFont = Bricolage_Grotesque({
   display: "swap",
 });
 
-const monoFont = Space_Mono({
+const monoFont = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   weight: "400",
